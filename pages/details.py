@@ -1,0 +1,279 @@
+from flet import *
+from utils import *
+import datetime
+
+def DetailsPage(page: Page, myPyrebase, class_id):
+
+    course_name = Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+    location = Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+    duration = Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+    time = Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+    date= Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+    level = Text('', font_family = 'Poppins', size= 25, weight = FontWeight.W_500)
+
+    number1 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+    number2 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+    number3 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+    number4 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+    number5 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+    number6 = TextField('', height= 50, width = 50, bgcolor= colors.TRANSPARENT, border_color=colors.WHITE, text_align= TextAlign.CENTER)
+
+    
+
+    def get_details():
+        data = myPyrebase.get_classes()
+        keys = data['classes'].keys()
+
+        for key in keys: 
+            if key == class_id:
+                print(class_id[-6:])                
+                course_name.value = data['classes'][key]['course']
+                location.value =  data['classes'][key]['location']
+                duration.value =  data['classes'][key]['duration']
+                time.value =  data['classes'][key]['time'][:5]
+                date.value =  data['classes'][key]['date'][:10]
+                level.value =  data['classes'][key]['level'][:10]
+
+    def clock_in(e):
+        cipher = number1.value + number2.value  + number3.value+ number4.value+ number5.value+ number6.value
+        if str(cipher) == class_id[-6:]:
+            page.snack_bar = SnackBar(
+            content=Text("Clock In Successfully", color=colors.WHITE),
+            bgcolor=colors.GREEN
+            )
+            page.snack_bar.open = True
+            page.go('/home')
+            page.update()
+
+        else:
+            page.snack_bar = SnackBar(
+            content=Text("Incorrect Info. Please Try Again.", color=colors.WHITE),
+            bgcolor=colors.RED
+            )
+            page.snack_bar.open = True
+            page.update()
+    
+    clock_in_button = Container(
+                    on_click = lambda e: clock_in(e),
+                    padding = padding.only(
+                                top = 15, left = 15, right = 15, bottom = 15
+                            ),
+                    gradient = LinearGradient(
+                        begin = alignment.center_right, 
+                        end=alignment.center_left,
+                        colors = colorway1_serious, 
+                    ),
+                    width = 370,
+                    border_radius = 15,
+                    content = Text('Clock In',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
+                )
+
+    def on_page_load():
+        if myPyrebase.check_token() == "Success":
+            get_details()
+            page.update()
+    
+    date_picker = DatePicker(
+        first_date=datetime.datetime(2023, 10, 1),
+        last_date=datetime.datetime(2024, 12, 31),
+    )
+
+    time_picker = TimePicker(
+        confirm_text="Confirm",
+        error_invalid_text="Time out of range",
+        help_text="Pick your time slot",    
+    )
+
+    page.overlay.append(time_picker)
+    page.overlay.append(date_picker)
+
+    def expose(e, screen1, screen2):
+        screen1.height = 0
+        screen2.height = page.window_height 
+        page.update()
+
+    def shrink(e, screen1, screen2):
+        screen1.height = 0
+        screen2.height = page.window_height 
+        page.update()
+
+    page_3 = Container(
+        height = 0,
+        padding = padding.only(
+            top = 15, left = 15, right = 15, bottom = 15
+        ),
+        bgcolor= background_colorway,
+        border_radius= 15,
+        content= Column(
+            [
+                Row(
+                    [
+                        IconButton(icons.CHEVRON_LEFT, icon_color= colors.WHITE, bgcolor= colors.TRANSPARENT, on_click= lambda e: shrink(e, page_3, page_1))
+                    ], 
+                    alignment= MainAxisAlignment.SPACE_BETWEEN
+                ),
+                Container(height = 75),
+                Text('Confirmation Code', font_family= 'Poppins', size = 25, weight = FontWeight.W_700),
+                Text('Type (6)Six number code generated by the Class representative', font_family= 'Poppins', size = 15, weight = FontWeight.W_400, text_align= TextAlign.CENTER),
+                Container(height = 25),
+                Row(
+                    [
+                        number1, 
+                        number2, 
+                        number3, 
+                        number4, 
+                        number5, 
+                        number6
+                    ]
+                ),
+                Container(height = 15), 
+                clock_in_button
+            ], 
+            
+        )
+    )
+
+    page_2 = Container(
+        height = 0,
+        padding = padding.only(
+            top = 15, left = 15, right = 15, bottom = 15
+        ),
+        bgcolor= background_colorway,
+        border_radius= 15,
+        content = Column(
+            [
+                Row(
+                    [
+                    IconButton(icons.CHEVRON_LEFT, icon_color= colors.WHITE, bgcolor= colors.TRANSPARENT, on_click= lambda e: shrink(e, page_2, page_1))
+                    ], 
+                    alignment= MainAxisAlignment.SPACE_BETWEEN
+                ),
+                Container(height = 25),
+                Text('Edit', font_family= 'Poppins', size = 25, weight = FontWeight.W_700),
+                TextField('Database Managment', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                Container(height = 2),
+                TextField('SAM 002', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                Container(height = 2),
+                TextField('2 Hours', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                Container(height = 2),
+                Row(
+                    [
+                        FloatingActionButton(
+                            'Pick Time',
+                            icon= icons.PUNCH_CLOCK, 
+                            on_click=lambda _: time_picker.pick_time()
+                        ), 
+                        FloatingActionButton(
+                            "Pick date",
+                            icon=icons.CALENDAR_MONTH,
+                            on_click=lambda _: date_picker.pick_date(),
+                        )
+                    ],
+                    alignment = MainAxisAlignment.CENTER
+                ), 
+                Container(
+                    on_click = lambda e: shrink(e, page_2, page_1),
+                    padding = padding.only(
+                                top = 15, left = 15, right = 15, bottom = 15
+                            ),
+                    gradient = LinearGradient(
+                        begin = alignment.center_right, 
+                        end=alignment.center_left,
+                        colors = colorway1_serious, 
+                    ),
+                    width = 370,
+                    border_radius = 15,
+                    content = Text('Update',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
+                    )
+
+            ]
+        )
+    )
+
+    page_1  = Container(
+        height = page.window_height,
+        content =  Column(
+                [
+                    Row(
+                        [
+                            IconButton(icons.CHEVRON_LEFT, icon_color= colors.WHITE, bgcolor= colors.TRANSPARENT, on_click = lambda _: page.go('/home'))
+                        ], 
+                        alignment= MainAxisAlignment.SPACE_BETWEEN
+                    ),
+                    Row(
+                        [
+                            Container(
+                                padding = padding.only(
+                                    top = 15, left = 15, right = 15, bottom = 15
+                                ),
+                                gradient = LinearGradient(
+                                    begin = alignment.center_right, 
+                                    end=alignment.center_left,
+                                    colors = colorway1_serious, 
+                                ),
+                                width = 370, 
+                                border_radius = 15, 
+                                content =Column(
+                                    [
+                                        course_name,
+                                        location, 
+                                        duration,
+                                        level,
+                                        time, 
+                                        date,
+                                        Row(
+                                            [
+                                                Text(''), 
+                                                IconButton(icons.EDIT, icon_color= colors.WHITE, bgcolor= colors.TRANSPARENT, on_click = lambda e: expose(e, page_1, page_2))
+                                                
+                                            ], 
+                                            alignment = MainAxisAlignment.SPACE_BETWEEN
+                                        )
+                                    ]
+                                )
+                            )
+                        ]
+                    ), 
+                    Container(
+                        on_click = lambda e: expose(e, page_1, page_3),
+                        padding = padding.only(
+                                    top = 15, left = 15, right = 15, bottom = 15
+                                ),
+                        gradient = LinearGradient(
+                            begin = alignment.center_right, 
+                            end=alignment.center_left,
+                            colors = colorway1_serious, 
+                        ),
+                        width = 370,
+                        border_radius = 15,
+                        content = Text('Clock In',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
+                    )
+                ]
+            )
+    )
+
+    details_page_content = Stack(
+        [
+            page_2, 
+            page_3,
+            page_1
+        ]
+    )
+
+
+    detailspage = Container(
+        height = page.window_height,
+        bgcolor= background_colorway, 
+        padding = padding.only(
+            top =15, left = 15, right=15, bottom=15,
+        ), 
+        alignment= alignment.center,
+        content = details_page_content
+    )
+
+
+
+    return{
+        'view': detailspage, 
+        'load': on_page_load
+    }
