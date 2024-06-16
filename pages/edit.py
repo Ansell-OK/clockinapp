@@ -15,11 +15,11 @@ def ConfirmationPage(page: Page, myPyrebase):
         help_text="Pick your time slot",
     )
 
-    course_name = TextField(label = 'Course', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
-    location_name = TextField(label = 'Lecture Hall', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
-    duration_name = TextField(label = 'Duration', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
+    course_name = TextField(label = 'Course', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
+    location_name = TextField(label = 'Lecture Hall', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
+    duration_name = TextField(label = 'Duration', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE)
     level_name = Dropdown(
-        width = 350,
+        width = page.width * 0.9,
         options = [
                     dropdown.Option('400'), 
                     dropdown.Option('300'), 
@@ -37,7 +37,7 @@ def ConfirmationPage(page: Page, myPyrebase):
     page.overlay.append(date_picker)
 
     confirm_page = Container(
-        height = page.window_height,
+        height = page.height,
         padding = padding.only(
             top = 15, left = 15, right = 15, bottom = 15
         ),
@@ -87,7 +87,7 @@ def ConfirmationPage(page: Page, myPyrebase):
                         end=alignment.center_left,
                         colors = colorway1_serious, 
                     ),
-                    width = 370,
+                    width = page.width * 0.9,
                     border_radius = 15,
                     content = Text('Create',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
                     )
@@ -98,7 +98,7 @@ def ConfirmationPage(page: Page, myPyrebase):
 
 
     confirmation_page = Container(
-        height = page.window_height,
+        height = page.height,
         bgcolor= background_colorway, 
         padding = padding.only(
             top =15, left = 15, right=15, bottom=15,

@@ -63,7 +63,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
                         end=alignment.center_left,
                         colors = colorway1_serious, 
                     ),
-                    width = 370,
+                    width = page.width * 0.9,
                     border_radius = 15,
                     content = Text('Clock In',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
                 )
@@ -94,7 +94,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
 
     def shrink(e, screen1, screen2):
         screen1.height = 0
-        screen2.height = page.window_height 
+        screen2.height = page.height 
         page.update()
 
     page_3 = Container(
@@ -150,11 +150,11 @@ def DetailsPage(page: Page, myPyrebase, class_id):
                 ),
                 Container(height = 25),
                 Text('Edit', font_family= 'Poppins', size = 25, weight = FontWeight.W_700),
-                TextField('Database Managment', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                TextField('Database Managment', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
                 Container(height = 2),
-                TextField('SAM 002', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                TextField('SAM 002', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
                 Container(height = 2),
-                TextField('2 Hours', width = 350,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
+                TextField('2 Hours', width = page.width * 0.9,  bgcolor=colors.TRANSPARENT, border_color=colors.WHITE),
                 Container(height = 2),
                 Row(
                     [
@@ -181,7 +181,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
                         end=alignment.center_left,
                         colors = colorway1_serious, 
                     ),
-                    width = 370,
+                    width = page.width * 0.9,
                     border_radius = 15,
                     content = Text('Update',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
                     )
@@ -191,7 +191,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
     )
 
     page_1  = Container(
-        height = page.window_height,
+        height = page.height,
         content =  Column(
                 [
                     Row(
@@ -211,7 +211,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
                                     end=alignment.center_left,
                                     colors = colorway1_serious, 
                                 ),
-                                width = 370, 
+                                width = page.width * 0.9, 
                                 border_radius = 15, 
                                 content =Column(
                                     [
@@ -244,7 +244,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
                             end=alignment.center_left,
                             colors = colorway1_serious, 
                         ),
-                        width = 370,
+                        width = page.width * 0.9,
                         border_radius = 15,
                         content = Text('Clock In',font_family = 'Poppins', size= 25, weight = FontWeight.W_500, text_align= TextAlign.CENTER )
                     )
@@ -262,7 +262,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
 
 
     detailspage = Container(
-        height = page.window_height,
+        height = page.height,
         bgcolor= background_colorway, 
         padding = padding.only(
             top =15, left = 15, right=15, bottom=15,

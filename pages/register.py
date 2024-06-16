@@ -84,7 +84,7 @@ def RegisterPage(page:Page, myPyrebase):
     )
 
     register_page_content = Container(
-        height = page.window_height * 0.5, 
+        height = page.height * 0.5, 
         padding = padding.only(
             top =10, right=10, left = 10 , bottom = 10
         ),
@@ -100,7 +100,7 @@ def RegisterPage(page:Page, myPyrebase):
     )
 
     register_page = Container(
-        height = page.window_height,
+        height = page.height,
         bgcolor= background_colorway, 
         padding = padding.only(
             top =15, left = 15, right=15, bottom=15,

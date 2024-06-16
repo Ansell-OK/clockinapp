@@ -20,7 +20,7 @@ class Classes(UserControl):
     def build(self):
         return Container(
                         on_click=self.go_to_class,
-                        width=290, 
+                        width=self.page.width * 0.7, 
                         border_radius= 15, 
                         padding = padding.only(
                             top=10, left = 10, right = 10, bottom = 10

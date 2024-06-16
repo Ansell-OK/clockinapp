@@ -3,6 +3,7 @@ from utils import *
 
 def LoginPage(page:Page, myPyrebase):
 
+
     page.fonts = {
         'Poppins': 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
     }
@@ -31,7 +32,6 @@ def LoginPage(page:Page, myPyrebase):
 
     page_content = Column(
         [
-            Container(height=10),
             Row(
                 [
                     IconButton(icon=icons.CANCEL_OUTLINED, icon_color= colors.WHITE, bgcolor=colors.TRANSPARENT, icon_size=15), 
@@ -77,7 +77,7 @@ def LoginPage(page:Page, myPyrebase):
     )
 
     login_page_content = Container(
-        height = page.window_height * 0.5, 
+        height = page.height * 0.45, 
         padding = padding.only(
             top =10, right=10, left = 10 , bottom = 10
         ),
@@ -88,12 +88,13 @@ def LoginPage(page:Page, myPyrebase):
             tile_mode= GradientTileMode.MIRROR
         ), 
         border_radius = 35,
+        alignment= alignment.center,
         content = page_content
 
     )
 
     login_page = Container(
-        height = page.window_height,
+        height = page.height,
         bgcolor= background_colorway, 
         padding = padding.only(
             top =15, left = 15, right=15, bottom=15,

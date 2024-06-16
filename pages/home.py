@@ -32,13 +32,10 @@ def HomePage(page: Page, myPyrebase):
                 
                 classes.append(class_tile)
 
-    def clean_classes():
-        classes.clear()
-        classes.append(Text(" "))
-        page.update()
+    
 
     def handle_logout(*e):
-        clean_classes()
+  
         myPyrebase.kill_all_streams()
         myPyrebase.sign_out()
         page.go("/")
@@ -46,7 +43,7 @@ def HomePage(page: Page, myPyrebase):
     def open_me1(e, screen_1, screen_2, screen_3): 
         screen_1.height = 0 
         screen_2.height = 0
-        screen_3.height = page.window_height
+        screen_3.height = page.height
 
         page.update()
 
@@ -67,6 +64,7 @@ def HomePage(page: Page, myPyrebase):
             time_zone.value = timezone
 
     def on_page_load():
+        print(page.height)
         if myPyrebase.check_token() == "Success":
             myPyrebase.stream_data_conversation_main(handle_convo_stream)
             get_data_time()
@@ -92,7 +90,7 @@ def HomePage(page: Page, myPyrebase):
                 ], 
                 alignment= MainAxisAlignment.SPACE_BETWEEN
             ), 
-            Container(height = page.window_height * 0.05), 
+            Container(height = page.height * 0.05), 
             time_text, 
             date_text,
             Container(height =5),
@@ -100,8 +98,8 @@ def HomePage(page: Page, myPyrebase):
             Container(height =2),
             Column(
                 classes, 
-                height= 400,
-                scroll= ScrollMode.HIDDEN
+                scroll= ScrollMode.HIDDEN, 
+                height = page.height*0.35
             ), 
             Container(height =5),
             Text('Timezone' ,font_family='Poppins', weight=FontWeight.W_700, size=15),
@@ -150,15 +148,17 @@ def HomePage(page: Page, myPyrebase):
                         ], 
                         alignment= MainAxisAlignment.SPACE_BETWEEN
                     ), 
-                    Container(height = page.window_height * 0.05),
+                    Container(height = page.height * 0.05),
                     
                    Column(
-                       classes
+                       classes, 
+                       height = page.height*0.65, 
+                       scroll= ScrollMode.HIDDEN
                    ), 
                     
                     Container(
                         on_click = lambda _: page.go('/confirmation'),
-                        width =290,
+                        width =page.width * 0.7,
                         border_radius = 15,
                         gradient= LinearGradient(
                             begin= alignment.center_right, 
@@ -178,7 +178,7 @@ def HomePage(page: Page, myPyrebase):
                         )
                     )
                 ], 
-                height= page.window_height,
+                height= page.height,
                 scroll=ScrollMode.HIDDEN, 
                
                 
@@ -201,7 +201,7 @@ def HomePage(page: Page, myPyrebase):
                 ], 
                 alignment= MainAxisAlignment.SPACE_BETWEEN
             ), 
-            Container(height = page.window_height * 0.05), 
+            Container(height = page.height * 0.05), 
             time_text,
             date_text,
             Container(height=5), 
@@ -224,15 +224,15 @@ def HomePage(page: Page, myPyrebase):
             Container(
                 height= 0.3, 
                 bgcolor= colors.WHITE, 
-                width = 270
+                width = page.width * 0.5
             ), 
             Container(height=10),
             Row(
                 [
                     Text('Timezone' ,font_family='Poppins', weight=FontWeight.W_200, size=15), 
-                    Text('                                           '),
                     Switch(value = False)
                 ],
+                width = page.width * 0.5,
                 alignment= MainAxisAlignment.SPACE_BETWEEN
             )
         ]
@@ -278,7 +278,7 @@ def HomePage(page: Page, myPyrebase):
                            horizontal_alignment= CrossAxisAlignment.CENTER
                        )
                    ),
-                   Container(height=200), 
+                   Container(height = page.height * 0.02), 
                    Container(
                         on_click=handle_logout,
                        content= Column(
@@ -291,11 +291,11 @@ def HomePage(page: Page, myPyrebase):
                    )
                 ], 
                 width= 50, 
-                height = page.window_height, 
+                height = page.height, 
                 horizontal_alignment= CrossAxisAlignment.CENTER
             ),
             Container(
-                height= page.window_height, 
+                height= page.height, 
                 bgcolor= colors.WHITE, 
                 width=0.1
             ),
@@ -312,7 +312,7 @@ def HomePage(page: Page, myPyrebase):
     )
 
     home_page = Container(
-        height = page.window_height,
+        height = page.height,
         bgcolor= background_colorway, 
         padding = padding.only(
             top =15, left = 15, right=15, bottom=15,
