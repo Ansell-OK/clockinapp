@@ -89,7 +89,7 @@ def DetailsPage(page: Page, myPyrebase, class_id):
 
     def expose(e, screen1, screen2):
         screen1.height = 0
-        screen2.height = page.window_height 
+        screen2.height = page.height 
         page.update()
 
     def shrink(e, screen1, screen2):

@@ -1,5 +1,5 @@
-flet 
-datetime
-requests
-pyrebase
-Pyrebase4
+flet[all]
+datetime[all]
+requests[all]
+pyrebase[all]
+Pyrebase4[all]
